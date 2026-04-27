@@ -1,7 +1,7 @@
 🌐 Translation Management System
 A high-performance translation management system built with Laravel 11 and Vue 3. Designed to handle over 100,000 translation records with optimized export speeds.
 
-📁 Project Structure
+**📁 Project Structure**
 The project is split into two main directories:
 
 /backend: Laravel 11 API (Sanctum Auth, MySQL/SQLite).
@@ -9,7 +9,7 @@ The project is split into two main directories:
 /frontend: Vue 3 SPA (Vite, Axios, CSS).
 
 🚀 Getting Started
-1. Backend Setup (Laravel)
+**1. Backend Setup (Laravel)**
 Bash
 cd backend
 composer install
@@ -28,7 +28,7 @@ Bash
 php artisan migrate --seed
 
 
-2. Frontend Setup (Vue)
+**2. Frontend Setup (Vue)**
 Bash
 cd frontend
 npm install
@@ -40,12 +40,12 @@ Code snippet
 VITE_API_BASE_URL=http://localhost:8000
 
 
-🛠 Features & Commands
+**🛠 Features & Commands**
 App Access
 Username: test@example.com
 Password: password
 
-Bulk Data Generation
+**Bulk Data Generation**
 To test the system's performance with 100k rows, use the custom artisan command. This utilizes background jobs to prevent memory exhaustion.
 
 Bash
@@ -67,13 +67,13 @@ Note: Tests require the php-sqlite3 driver as they run in-memory for speed.
 To optimize the delivery of translation files for worldwide users, the system supports Locale-Specific Exports.
 Direct Download: Small JSON files per locale (e.g., en.json) can be cached on a CDN (like Cloudflare or AWS CloudFront).
 
-Implementation:
+**Implementation:**
 
 Set the Cache-Control headers in the TranslationController@exportLocale.
 
 Point your CDN to the /api/translations/export/{code} endpoint.
 
-🖥 User Interface Overview
+**🖥 User Interface Overview**
 Key Components:
 
 Dashboard View: Displays a paginated list of 100k records. Features a Debounced Search to ensure the API isn't overwhelmed while typing.
@@ -82,7 +82,7 @@ Quick Export Zone: Located at the top, allowing for single-click downloads of sp
 
 Live Translation Test: A dedicated page to verify how keys appear in "Web" vs "Mobile" views in real-time.
 
-📖 API Documentation (Postman)
+**📖 API Documentation (Postman)**
 The API is protected by Laravel Sanctum. To test via Postman:
 
 Login: POST /api/login to receive a plainTextToken.
@@ -96,5 +96,10 @@ GET /api/languages: List active languages.
 GET /api/translations: List/Filter translations.
 
 GET /api/translations/export/{code}: Export specific locale.
+
+**HOW TO USE THE APP**
+Once running, you can login with the default credentials. In the homepage, that is the testing page. You can select different translations based on the selected language. Some translations are specific based on the screen size (mobile and web). 
+
+There is also a management area where you can perform CRUD and export operations on the translations.
 
 

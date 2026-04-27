@@ -41,16 +41,19 @@ VITE_API_BASE_URL=http://localhost:8000
 
 
 🛠 Features & Commands
+App Access
+Username: test@example.com
+Password: password
+
 Bulk Data Generation
 To test the system's performance with 100k rows, use the custom artisan command. This utilizes background jobs to prevent memory exhaustion.
 
 Bash
 # Dispatch 100k rows (split into background jobs)
-php artisan generate:translations-data 100000
+php artisan generate:translations-data
 
 # Process the jobs
 php artisan queue:work --stop-when-empty
-
 
 Running Unit Tests
 The test suite covers Repository, Service, and Controller layers using PHPUnit.
@@ -94,4 +97,4 @@ GET /api/translations: List/Filter translations.
 
 GET /api/translations/export/{code}: Export specific locale.
 
-Inclusion in the TranslationTest suite.
+

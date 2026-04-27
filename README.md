@@ -12,7 +12,7 @@ The system uses a decoupled architecture with a REST API backend and a single-pa
 The project is split into two main parts:
 
 /backend  
-Laravel 11 API application  
+Laravel 12 API application  
 - Authentication via Laravel Sanctum  
 - Database support: MySQL (primary), SQLite (testing)
 

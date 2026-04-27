@@ -119,12 +119,7 @@ php artisan test --filter TranslationTest
 Notes:
 - Tests run using SQLite in-memory for speed
 - Ensure the `php-sqlite3` extension is installed
-
-The test suite covers:
-- Repository layer  
-- Service layer  
-- Controller layer  
-
+  
 ---
 
 ## 📦 CDN & Export Optimization
@@ -141,12 +136,6 @@ This makes it easier to cache and distribute via CDNs.
 - Export endpoint:
 
 /api/translations/export/{code}
-
-- Cache headers should be configured in:
-
-TranslationController@exportLocale  
-
-This allows responses to be cached by services like Cloudflare or CloudFront.
 
 ---
 

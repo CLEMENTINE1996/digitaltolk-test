@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\Translation;
 use App\Models\TranslationLanguage;
+use App\Services\TranslationService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,6 +15,7 @@ class TranslationTest extends TestCase
 
     protected TranslationLanguage $language;
     protected User $user;
+    protected TranslationService $translationService;
 
     /**
      * Set up common data for the tests.
@@ -31,6 +33,8 @@ class TranslationTest extends TestCase
 
         $this->user = User::factory()->create();
         $this->actingAs($this->user);
+
+        $this->translationService = app(TranslationService::class);
     }
 
     /**
@@ -122,5 +126,28 @@ class TranslationTest extends TestCase
             ->assertStatus(204);
 
         $this->assertDatabaseMissing('translations', ['id' => $translation->id]);
+    }
+
+    /**
+     * Test export performace
+     * * @return void
+     */
+
+    public function test_export_by_locale_performance_threshold(): void
+    {
+        // create 10k temp data
+        $generator = app(\App\Services\TranslationGeneratorService::class);
+        $generator->generateBulk(10000);
+
+        // measure the execution time
+        $start = microtime(true);
+
+        $this->translationService->exportByLocale('en');
+
+        $end = microtime(true);
+        $executionTime = ($end - $start) * 1000;
+
+        // check time
+        $this->assertLessThan(200, $executionTime, "Export took {$executionTime}ms, which exceeds the 200ms limit.");
     }
 }

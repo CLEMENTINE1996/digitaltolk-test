@@ -37,7 +37,12 @@ class TranslationGeneratorService
         'cs' => 'Czech'
     ];
 
-    public function generateBulk(int $rowsPerJob = 1000)
+    /**
+     * @param int $rowsPerJob
+     * @param string|null $targetLocale  // e.g., 'en', 'de'
+     * @return void
+     */
+    public function generateBulk(int $rowsPerJob = 1000, string $targetLocale = null)
     {
         Log::info("Bulk Generator: Starting generation for {$rowsPerJob} rows.");
         $startTime = microtime(true);
@@ -59,6 +64,15 @@ class TranslationGeneratorService
             $chunkSize = 500;
             $batchCount = 0;
 
+            $selectedLang = null;
+            if ($targetLocale) {
+                $selectedLang = collect($langModels)->first(fn($model) => $model->code === $targetLocale);
+
+                if (!$selectedLang) {
+                    Log::warning("Bulk Generator: Target locale '{$targetLocale}' not found. Falling back to random.");
+                }
+            }
+
             while ($rowsGenerated < $rowsPerJob) {
                 $batch = [];
                 $batchCount++;
@@ -66,7 +80,7 @@ class TranslationGeneratorService
                 for ($i = 0; $i < $chunkSize; $i++) {
                     if ($rowsGenerated >= $rowsPerJob) break;
 
-                    $lang = $langModels[array_rand($langModels)];
+                    $lang = $selectedLang ?? $langModels[array_rand($langModels)];
 
                     $batch[] = [
                         'translation_language_id' => $lang->id,
